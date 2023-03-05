@@ -24,7 +24,7 @@ public class GameBoard {
         String[][] filledBoard = board.getBoard();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                filledBoard[i][j] = "_";
+                filledBoard[i][j] = " ";
             }
         }
         board.setBoard(filledBoard);
