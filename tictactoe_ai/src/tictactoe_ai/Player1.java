@@ -1,26 +1,16 @@
 package tictactoe_ai;
 
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
-public interface Player1 extends Gameplay {
+public interface Player1 {
 
-    static void playerOneMove(GameBoard b, Scanner sc, boolean isAI) {
+    static void playerOneMove(GameBoard b, Scanner sc, String player) {
         String[][] board = b.getBoard();
 
-        if (isAI) {
-            System.out.println("Making move level \"easy\"");
-            while (true) {
-                int x = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-                int y = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-
-                if (board[x][y].equals("X") || board[x][y].equals("O")) {
-                    continue;
-                }
-
-                board[x][y] = "X";
-                break;
-            }
+        if (player.equals("easy")) {
+            AI_Logic.easy(board, "X");
+        } else if (player.equals("medium")) {
+            AI_Logic.med(b, board, "X");
         }
 
         else {

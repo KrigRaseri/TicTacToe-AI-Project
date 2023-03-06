@@ -9,32 +9,16 @@ public interface Util {
             GameBoard b = new GameBoard(new String[3][3]);
             while (true) {
                 System.out.print("Input command: ");
-                String input = sc.nextLine();
-                switch (input.toLowerCase()) {
-                    case "start user user":
-                        playGame(sc, b, "user", "user");
-                        break;
+                String[] input = sc.nextLine().toLowerCase().split(" ");
 
-                    case "start user easy":
-                        playGame(sc, b, "user", "easy");
-                        break;
-
-                    case "start easy user":
-                        playGame(sc, b, "easy", "user");
-                        break;
-
-                    case "start easy easy":
-                        playGame(sc, b, "easy", "easy");
-                        break;
-
-                    case "exit":
-                        break;
-
-                    default:
-                        System.out.println("Bad parameters!");
-                        continue;
+                if (input[0].equals("start")) {
+                    playGame(sc, b, input[1], input[2]);
+                    break;
+                } else if (input[0].equals("exit")) {
+                    break;
+                } else {
+                    System.out.println("Bad parameters!");
                 }
-                break;
             }
         }
     }
@@ -42,19 +26,30 @@ public interface Util {
     private static void playGame(Scanner sc, GameBoard b, String modeX, String modeO) {
         b.fillBoard(b);
         b.printBoard(b);
+        int turnCount = 0;
 
-        boolean p1 = modeX.equals("user") ? false : true;
-        boolean p2 = modeO.equals("user") ? false : true;
         while(true) {
 
-            Player1.playerOneMove(b, sc, p1);
+            Player1.playerOneMove(b, sc, modeX);
             b.printBoard(b);
-            if (Gameplay.gameOver(b)) {break;}
+            if (Gameplay.gameOver(b.getBoard())) {
+                System.out.println("X wins");
+                break;
+            }
+            turnCount++;
 
+            if (turnCount == 9) {
+                System.out.println("Draw");
+                break;
+            }
 
-            Player2.playerTwoMove(b, sc, p2);
+            Player2.playerTwoMove(b, sc, modeO);
             b.printBoard(b);
-            if (Gameplay.gameOver(b)) {break;}
+            if (Gameplay.gameOver(b.getBoard())) {
+                System.out.println("O wins");
+                break;
+            }
+            turnCount++;
         }
     }
 }

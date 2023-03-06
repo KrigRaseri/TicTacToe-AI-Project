@@ -24,30 +24,17 @@ public interface Gameplay {
     }
 
     //Win conditions
-    static boolean gameOver(GameBoard board) {
-        String[][] b = board.getBoard();
+    static boolean gameOver(String[][] board) {
         ArrayList<String> li = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            li.addAll(Arrays.asList(b[i]).subList(0, 3));
+            li.addAll(Arrays.asList(board[i]).subList(0, 3));
         }
 
         if (xWins(li)) {
-            System.out.println("X wins");
             return true;
-        } else if (oWins(li)) {
-            System.out.println("O wins");
-            return true;
-        } else if (isDraw(li)) {
-            System.out.println("Draw");
-            return true;
-        }
-        return false;
+        } else return oWins(li);
     }
 
-
-    private static boolean isDraw(ArrayList<String> li) {
-        return !xWins(li) && !oWins(li) && !li.contains(" ");
-    }
 
     private static boolean xWins(ArrayList<String> li) {
         return xWinsHor(li) || xWinsVert(li) || xWinsDiag(li);
@@ -57,6 +44,7 @@ public interface Gameplay {
         return oWinsHor(li) || oWinsVert(li) || oWinsDiag(li);
     }
     
+
     private static boolean xWinsHor(ArrayList<String> arr) {
         if (arr.get(0).equals("X") && arr.get(1).equals("X") && arr.get(2).equals("X")) {
             return true;
@@ -78,7 +66,6 @@ public interface Gameplay {
             return true;
         } else return arr.get(2).equals("X") && arr.get(4).equals("X") && arr.get(6).equals("X");
     }
-
 
 
     private static boolean oWinsHor(ArrayList<String> arr) {

@@ -1,8 +1,7 @@
 package tictactoe_ai;
 
-import java.util.Scanner;
-
 public class GameBoard {
+    //Field
     private String[][] board;
 
     //Constructor
@@ -19,36 +18,23 @@ public class GameBoard {
         this.board = board;
     }
 
-    //Board specific methods.
+    public String[][] getBoardCopy(String[][] board) {
+        String[][] boardCopy = new String[3][3];
+
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; j++) {
+                boardCopy[i][j] = board[i][j];
+            }
+        }
+        return boardCopy;
+    }
+
+    //Board specific methods
     public void fillBoard(GameBoard board) {
         String[][] filledBoard = board.getBoard();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 filledBoard[i][j] = " ";
-            }
-        }
-        board.setBoard(filledBoard);
-    }
-
-    public void fillBoardFromInput(GameBoard board, Scanner s) {
-        System.out.print("Enter the cells: ");
-        String input = s.nextLine();
-        while (!inputCheck(input)) {
-            input = s.nextLine();
-        }
-        int count = 0;
-        String[][] filledBoard = board.getBoard();
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (input.charAt(count) == '_') {
-                    filledBoard[i][j] = " ";
-                    count++;
-                    continue;
-                }
-
-                filledBoard[i][j] = String.valueOf(input.charAt(count));
-                count++;
             }
         }
         board.setBoard(filledBoard);
@@ -65,14 +51,5 @@ public class GameBoard {
             System.out.println("|");
         }
         System.out.println("---------");
-    }
-
-    //Board setup input check methods.
-    public static boolean inputCheck(String input) {
-        if (input.length() != 9) {
-            System.out.println("Input length incorrect.");
-            return false;
-        }
-        return true;
     }
 }
