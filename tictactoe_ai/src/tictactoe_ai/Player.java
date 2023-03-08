@@ -2,17 +2,21 @@ package tictactoe_ai;
 
 import java.util.Scanner;
 
-public interface Player1 {
+interface Player {
 
-    static void playerOneMove(GameBoard b, Scanner sc, String player) {
+    static void playerMove(GameBoard b, Scanner sc, String player, String xo) {
         String[][] board = b.getBoard();
 
+        //AI options.
         if (player.equals("easy")) {
-            AI_Logic.easy(board, "X");
+            AI_Logic.easy(board, xo);
         } else if (player.equals("medium")) {
-            AI_Logic.med(b, board, "X");
+            AI_Logic.med(b, board, xo);
+        } else if (player.equals("hard")) {
+            AI_Logic.hard(b, board,xo);
         }
 
+        //User
         else {
             while (true) {
                 System.out.print("Enter the coordinates: ");
@@ -29,7 +33,7 @@ public interface Player1 {
                     continue;
                 }
 
-                board[x][y] = "X";
+                board[x][y] = xo;
                 break;
             }
         }

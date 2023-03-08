@@ -24,17 +24,33 @@ public interface Gameplay {
     }
 
     //Win conditions
-    static boolean gameOver(String[][] board) {
+    static String gameOver(String[][] board) {
         ArrayList<String> li = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             li.addAll(Arrays.asList(board[i]).subList(0, 3));
         }
 
         if (xWins(li)) {
-            return true;
-        } else return oWins(li);
+            return "X";
+        }
+
+        if (oWins(li)) {
+            return "O";
+        }
+        return " ";
     }
 
+    static boolean isDraw(String[][] board) {
+        ArrayList<String> li = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            li.addAll(Arrays.asList(board[i]).subList(0, 3));
+        }
+
+        if (li.contains(" ")) {
+            return false;
+        }
+        return true;
+    }
 
     private static boolean xWins(ArrayList<String> li) {
         return xWinsHor(li) || xWinsVert(li) || xWinsDiag(li);

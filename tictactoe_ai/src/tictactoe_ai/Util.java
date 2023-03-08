@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public interface Util {
 
+    //Runs the menu interface.
     static void menu() {
         try (Scanner sc = new Scanner(System.in)) {
             GameBoard b = new GameBoard(new String[3][3]);
@@ -11,7 +12,7 @@ public interface Util {
                 System.out.print("Input command: ");
                 String[] input = sc.nextLine().toLowerCase().split(" ");
 
-                if (input[0].equals("start")) {
+                if (input[0].equals("start") && input.length == 3) {
                     playGame(sc, b, input[1], input[2]);
                     break;
                 } else if (input[0].equals("exit")) {
@@ -23,33 +24,36 @@ public interface Util {
         }
     }
 
+    /**
+     * Starts the game with the chosen game modes.
+     *
+     * @param b represents a GameBoard object.
+     * @param (modeX, modeY) represents the chosen game mode for X/Y. Easy/Med/Hard.
+     * */
     private static void playGame(Scanner sc, GameBoard b, String modeX, String modeO) {
         b.fillBoard(b);
         b.printBoard(b);
-        int turnCount = 0;
 
         while(true) {
 
-            Player1.playerOneMove(b, sc, modeX);
+            Player.playerMove(b, sc, modeX, "X");
             b.printBoard(b);
-            if (Gameplay.gameOver(b.getBoard())) {
+            if (Gameplay.gameOver(b.getBoard()).equals("X")) {
                 System.out.println("X wins");
                 break;
             }
-            turnCount++;
 
-            if (turnCount == 9) {
+            if (Gameplay.isDraw(b.getBoard())) {
                 System.out.println("Draw");
                 break;
             }
 
-            Player2.playerTwoMove(b, sc, modeO);
+            Player.playerMove(b, sc, modeO, "O");
             b.printBoard(b);
-            if (Gameplay.gameOver(b.getBoard())) {
+            if (Gameplay.gameOver(b.getBoard()).equals("O")) {
                 System.out.println("O wins");
                 break;
             }
-            turnCount++;
         }
     }
 }
